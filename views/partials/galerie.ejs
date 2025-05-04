@@ -1,0 +1,44 @@
+<!-- Galerie statica -->
+<div class="galerie-statica">
+    <% if (imagini && imagini.length > 0) { %>
+        <% let displayCount = Math.min(imagini.length , 10); %>
+        <% for (let i = 0; i < displayCount ; i++) { %>
+            <% let imageIndex = i; %>
+            <!-- initial era i - (i > 4 ? 1 : 0) - (i > 7 ? 1 : 0) pentru ca numaram pana la 12 child elements in grid-->
+            <% if (imageIndex <= displayCount) { %>
+                <% let imagine = imagini[imageIndex]; %>
+                <figure class="galerie-item">
+                    <picture>
+                        <!-- Large screen image (500px) -->
+                        <source media="(min-width: 1200px)" 
+                                srcset="/<%- cale_galerie %>/<%- imagine.cale_imagine %>">
+                        <!-- Medium screen image -->
+                        <source media="(min-width: 768px)" 
+                                srcset="/<%- cale_galerie %>/medium/<%- imagine.cale_imagine %>">
+                        <!-- Small screen image -->
+                        <source media="(max-width: 767px)" 
+                                srcset="/<%- cale_galerie %>/small/<%- imagine.cale_imagine %>">
+                        <!-- Fallback image -->
+                        <img src="/<%- cale_galerie %>/<%- imagine.cale_imagine %>" 
+                             alt="<%- imagine.alt || imagine.cale_imagine %>"
+                             title="<%- imagine.descriere %>">
+                    </picture>
+                    <figcaption>
+                        <strong><%- imagine.titlu %></strong>
+                        <p><%- imagine.descriere %></p>
+                        <% if (imagine.licenta) { %>
+                             <small class="licenta">
+                                © <%- imagine.licenta.autor %> - 
+                                <a href="<%- imagine.licenta.link %>" target="_blank">
+                                    <%- imagine.licenta.nume %>
+                                </a>
+                            </small>
+                        <% } %>
+                    </figcaption>
+                 </figure>
+            <% } %>
+        <% } %>
+    <% } else { %>
+        <p class="no-images">Nu există imagini disponibile pentru acest moment.</p>
+    <% } %>
+</div>

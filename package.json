@@ -1,0 +1,32 @@
+{
+  "name": "pricopalexandru_tw",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --load-path=node_modules public/styles/sass:public/styles/css --watch",
+    "sass:build": "sass --load-path=node_modules public/styles/sass:public/styles/css --style compressed"
+  },
+  "keywords": [],
+  "author": "Pricop Alexandru",
+  "license": "ISC",
+  "description": "Magazin de merch amuzant",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pricop-alexandru/OnlyMerch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pricop-alexandru/OnlyMerch/issues"
+  },
+  "homepage": "https://github.com/pricop-alexandru/OnlyMerch#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.5",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "path-to-regexp": "^8.2.0",
+    "sharp": "^0.34.1"
+  },
+  "devDependencies": {
+    "sass": "^1.87.0"
+  }
+}

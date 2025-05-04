@@ -1,0 +1,80 @@
+{
+    "cale_galerie": "resources/img/galerie",
+    "imagini": [
+        {
+            "cale_imagine": "img1.jpg",
+            "titlu": "Funny T-Shirt Design 1",
+            "descriere": "Creative and humorous t-shirt design featuring a witty slogan",
+            "sfert_ora": "2",
+            "alt": "T-shirt design 1",
+            "licenta": {
+                "nume": "CC-BY 4.0",
+                "autor": "John Doe",
+                "link": "https://example.com/license"
+            }
+        },
+        {
+            "cale_imagine": "img2.jpg",
+            "titlu": "Funny T-Shirt Design 2",
+            "descriere": "Unique and colorful t-shirt design with a funny character",
+            "sfert_ora": "2",
+            "alt": "T-shirt design 2"
+        },
+        {
+            "cale_imagine": "img3.jpg",
+            "titlu": "Funny T-Shirt Design 3",
+            "descriere": "Minimalist t-shirt design with a clever pun",
+            "sfert_ora": "2",
+            "alt": "T-shirt design 3"
+        },
+        {
+            "cale_imagine": "img4.jpg",
+            "titlu": "Funny T-Shirt Design 4",
+            "descriere": "I'm stupid design",
+            "sfert_ora": "2",
+            "alt": "T-shirt design 4"
+        },
+        {
+            "cale_imagine": "img5.jpg",
+            "titlu": "Funny T-Shirt Design 5",
+            "descriere": "Victim of circumcision design",
+            "sfert_ora": "2",
+            "alt": "T-shirt design 5"
+        },
+        {
+            "cale_imagine": "img6.jpg",
+            "titlu": "Funny T-Shirt Design 6",
+            "descriere": "One million beers calling design",
+            "sfert_ora": "2",
+            "alt": "T-shirt design 6"
+        },
+        {
+            "cale_imagine": "img7.jpg",
+            "titlu": "Funny T-Shirt Design 7",
+            "descriere": "Pop culture inspired t-shirt design",
+            "sfert_ora": "2",
+            "alt": "T-shirt design 7"
+        },
+        {
+            "cale_imagine": "img8.jpg",
+            "titlu": "Funny T-Shirt Design 8",
+            "descriere": "Geometric pattern t-shirt design",
+            "sfert_ora": "2",
+            "alt": "T-shirt design 8"
+        },
+        {
+            "cale_imagine": "img9.jpg",
+            "titlu": "Funny T-Shirt Design 9",
+            "descriere": "Abstract art t-shirt design",
+            "sfert_ora": "2",
+            "alt": "T-shirt design 9"
+        },
+        {
+            "cale_imagine": "img10.jpg",
+            "titlu": "Funny T-Shirt Design 10",
+            "descriere": "Typography-based t-shirt design",
+            "sfert_ora": "2",
+            "alt": "T-shirt design 10"
+        }
+    ]
+}

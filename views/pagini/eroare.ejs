@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head', {title: titlu}) %>
+</head>
+<body>
+    <%- include('../partials/header', {title: 'OnlyMerch - Eroare'}) %>
+    
+    <main class="error-container">
+        <h2><%= titlu %></h2>
+        <p><%= text %></p>
+        <img src="/resources/img/erori/404.png" alt="Eroare">
+        <!-- Cerinta 12: template afisare erori -->
+        <div class="error-content">
+            <% if (imagine) { %>
+                <img src="<%= imagine %>" alt="<%= titlu %>" class="error-image">
+            <% } %>
+            <h1 class="error-code"><%= identificator || 'Eroare' %></h1>
+            <div class="error-text">
+                <h2><%= titlu %></h2>
+                <p><%= text %></p>
+            </div>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

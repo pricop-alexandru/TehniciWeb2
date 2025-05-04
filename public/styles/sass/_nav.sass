@@ -1,0 +1,130 @@
+// Variabile
+$menu-transition: 0.3s ease
+$submenu-offset: 10px
+$hamburger-color: var(--secondary)
+$menu-shadow: 0 4px 12px rgba(0,0,0,0.15)
+
+// Mixin pentru efect de hover
+=hover-effect($color)
+  &::before
+    content: ''
+    position: absolute
+    top: 50%
+    left: 50%
+    width: 100%
+    height: 100%
+    background: rgba($color, 0.1)
+    transform: translate(-50%, -50%) scale(0)
+    transition: transform $menu-transition
+    border-radius: 4px
+    pointer-events: none
+
+  &:hover::before
+    transform: translate(-50%, -50%) scale(1)
+
+// Structura principala
+nav
+  position: relative
+  font-family: 'Gidole', sans-serif
+
+  > ul
+    display: flex
+    gap: 2rem
+    margin: 0
+    padding: 0
+    list-style: none
+
+    > li
+      position: relative
+      padding: 1rem 0
+
+      > a
+        color: var(--primary)
+        text-decoration: none
+        padding: 0.5rem 1rem
+        position: relative
+        +hover-effect(var(--accent))
+
+      // Submeniu
+      ul
+        position: absolute
+        top: 100%
+        left: 0
+        min-width: 200px
+        background: white
+        box-shadow: $menu-shadow
+        border-radius: var(--border-radius)
+        transform-origin: left top
+        transform: scale(0)
+        transition: transform $menu-transition
+        list-style: none
+        padding: 0.5rem 0
+        z-index: 1000
+
+        li
+          padding: 0.5rem 1rem
+
+          a
+            color: var(--dark)
+            transition: all 0.2s ease
+            position: relative
+
+            @for $i from 1 through 5
+              &:nth-child(#{$i})
+                transition-delay: $i * 0.05s
+
+            &:hover
+              color: var(--primary)
+              text-shadow: 0 0 2px rgba(var(--dark), 0.1)
+
+      &:hover ul
+        transform: scale(1)
+
+// Responsive
+@media (max-width: 1200px)
+  nav > ul
+    gap: 1rem
+    > li > a
+      font-size: 0.9rem
+      padding: 0.5rem
+
+    .fa-home
+      display: inline-block
+      margin-right: 0.5rem
+
+@media (max-width: 768px)
+  nav
+    .hamburger
+      display: block
+      cursor: pointer
+      padding: 1rem
+
+    > ul
+      display: none
+      position: absolute
+      top: 100%
+      right: 0
+      background: white
+      box-shadow: $menu-shadow
+      width: 100%
+      max-width: 300px
+
+      > li
+        padding: 0
+
+        > a
+          display: block
+          padding: 1rem
+
+        ul
+          position: static
+          transform: none
+          box-shadow: none
+          clip-path: polygon(0 0, 100% 0, 100% 0, 0 0)
+          transition: clip-path $menu-transition
+
+          &.open
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%)
+
+          li
+            padding-left: 2rem

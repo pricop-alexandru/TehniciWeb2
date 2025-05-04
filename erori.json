@@ -1,0 +1,31 @@
+{
+    "cale_baza": "/public/resources/img/erori",
+    "eroare_default": {
+        "titlu": "Eroare neasteptata",
+        "text": "A aparut o problema tehnica",
+        "imagine": "default.png"
+    },
+    "info_erori": [
+        {
+            "identificator": 404,
+            "status": true,
+            "titlu": "Pagina nu exista",
+            "text": "Resursa solicitata nu a fost gasita",
+            "imagine": "404.png"
+        },
+        {
+            "identificator": 403,
+            "status": true,
+            "titlu": "Acces interzis",
+            "text": "Nu aveti permisiunea de a accesa aceasta resursa",
+            "imagine": "403.png"
+        },
+        {
+            "identificator": 400,
+            "status": true,
+            "titlu": "Cerere invalida",
+            "text": "Tipul de resursa solicitat nu este suportat",
+            "imagine": "400.png"
+        }
+    ]
+}

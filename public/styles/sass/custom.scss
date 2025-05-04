@@ -1,0 +1,32 @@
+// Import Bootstrap and gallery styles first
+@use "galerie";
+@import "//bootstrap/scss/bootstrap";
+
+// Then define variables and styles
+$theme-colors: (
+  "primary": #6EBDD3,
+  "secondary": #27434B,
+  "accent": #5C9EB1,
+  "dark": #276576,
+  "light": #72C4DB
+) !default;
+
+$btn-primary-color: #ffffff !default;
+$btn-secondary-color: #f0f0f0 !default;
+$border-radius: 12px !default;
+$font-family-base: 'Gidole', sans-serif !default;
+$line-height-base: 1.6 !default;
+
+// Custom styles
+button {
+  cursor: pointer;
+  font-family: $font-family-base;
+  border-radius: $border-radius;
+  padding: 0.5rem 1rem;
+  background-color: var(--bs-primary);
+  color: $btn-primary-color;
+  border: none;
+  &:hover {
+    background-color: var(--bs-accent);
+  }
+}

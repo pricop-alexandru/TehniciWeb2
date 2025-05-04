@@ -1,0 +1,592 @@
+:root {
+/* Schema cromatica */
+/* Adaugare variabila pentru culoarea linkurilor vizitate */
+--visited-link-color: #5C9EB1; /* Folosind culoarea accent, poate fi ajustata */
+
+    --primary: #6EBDD3;
+    --secondary: #27434B;
+    --accent: #5C9EB1;
+    --dark: #276576;
+    --light: #72C4DB;
+    
+    /* Spacing */
+    --spacing: 2rem;
+    --border-radius: 8px;
+}
+/* Stiluri pentru linkurile vizitate */
+a:visited {
+    color: var(--visited-link-color);
+}
+/* Stiluri pentru linkurile externe */
+a[href^="http"]::before {
+    content: "⮳"; /* Simbolul pentru linkurile externe */
+    font-size: 1.5em; /* Marime font 50% mai mare */
+    margin-right: 0.25em; /* Spatiu intre simbol si text */
+    vertical-align: middle; /* Aliniere verticala */
+}
+
+/* Efect de hover pentru linkurile externe */
+a[href^="http"]:hover::before {
+    color: var(--accent); /* Schimbare culoare la hover */
+    transition: color 0.3s ease; /* Tranzitie lina */
+}
+
+/* Efect de hover pentru linkurile din continut (excluzand linkurile din meniu) */
+main a:not(nav a) {
+    position: relative; /* Pozitie relativa pentru efectul de hover */
+    z-index: 1; /* Asigurare ca este deasupra altor elemente */
+}
+
+main a:not(nav a)::before {
+    content: ""; /* Efect de fundal pentru hover */
+    position: absolute; /* Pozitie absoluta pentru a se centra */
+    top: 50%; /* Centrare verticala */
+    left: 50%; /* Centrare orizontala */
+    width: 0; /* Dimensiune initiala 0 */
+    height: 0; /* Dimensiune initiala 0 */
+    background: radial-gradient(circle, var(--primary) 0%, var(--primary) 40%, transparent 80%, transparent 100%); /* Fundal gradient radial */
+    transform: translate(-50%, -50%); /* Centrare */
+    z-index: -1; /* Fundal sub text */
+    transition: all 0.3s ease; /* Tranzitie lina */
+}
+
+main a:not(nav a):hover::before {
+    width: 100%; /* Dimensiune completa la hover */
+    height: 100%; /* Dimensiune completa la hover */
+}
+
+body {
+    font-family: 'Gidole', sans-serif;
+    line-height: 1.6;
+    padding: var(--spacing);
+}
+
+/* Tabel Stilizat */
+.table-container {
+    overflow-x: auto;
+    margin: 2rem 0;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 5px inset var(--dark);
+    caption-side: bottom;
+}
+
+.styled-table td, .styled-table th {
+    border: 1px solid var(--light);
+    padding: 0.8rem;
+    text-align: center;
+}
+
+.styled-table tr:nth-child(even) {
+    border-bottom: 1px solid var(--primary);
+}
+
+.styled-table tr:nth-child(odd) {
+    border-bottom: 1px solid var(--accent);
+}
+
+.styled-table tr:hover {
+    outline: 5px solid rgba(110, 189, 211, 0.7);
+    transition: outline 0.5s ease;
+}
+
+/* Link-top Button */
+.link-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: rgba(110, 189, 211, 0.8);
+    border: 2px solid var(--secondary);
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 4px 12px rgba(39, 67, 75, 0.2);
+    filter: drop-shadow(0 2px 4px rgba(39, 67, 75, 0.1));
+    transition: all 0.4s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: visible;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Sageata */
+.link-top .arrow {
+    font-size: 3rem;
+    color: var(--secondary);
+    transform: translateY(5px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    color: var(--secondary);
+}
+
+/* Hover effects */
+.link-top:hover {
+    background: var(--primary);
+    transform:scale(125%);
+    box-shadow: 0 6px 16px rgba(39, 67, 75, 0.3);
+}
+
+.link-top:hover .arrow {
+    transform: translateY(0) scale(1.2);
+    text-shadow: 0 2px 4px rgba(39, 67, 75, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: calc(var(--spacing) * 0.5);
+        font-size: 14px;
+    }
+    
+    .styled-table {
+        min-width: 600px;
+    }
+
+    .link-top {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .link-top .arrow {
+        font-size: 1.6rem;
+    }
+}
+
+/* MathML Section */
+.formula-container {
+    background: rgba(110, 189, 211, 0.1);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    margin: 3rem 0;
+    border: 2px solid var(--primary);
+}
+
+.formula-container math {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+.formula-container p {
+    color: var(--secondary);
+    font-style: italic;
+    margin-top: 1rem;
+}
+
+/* Video Tabs */
+.video-tabs {
+    margin: 3rem 0;
+    background: var(--light);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+}
+
+.tab-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab-btn {
+    background: var(--primary);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.tab-btn.active {
+    background: var(--dark);
+    transform: scale(1.05);
+}
+
+.tab-btn:hover {
+    background: var(--accent);
+}
+
+.video-player {
+    width: 100%;
+    height: 500px;
+    border-radius: var(--border-radius);
+    border: 3px solid var(--dark);
+}
+
+@media (max-width: 768px) {
+    .video-player {
+        height: 300px;
+    }
+    
+    .tab-buttons {
+        flex-direction: column;
+    }
+    
+    .formula-container math {
+        font-size: 1rem;
+    }
+}
+
+.styled-table {
+    border-collapse: separate; /* Pentru borduri alternante vizibile */
+    border-spacing: 0;
+}
+
+/* Meniul nav */
+nav {
+    position: relative;
+    font-family: "Gidole", sans-serif;
+  }
+  nav > ul {
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  nav > ul > li {
+    position: relative;
+    padding: 1rem 0;
+  }
+nav > ul > li > a {
+    color: var(--primary);
+
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    position: relative;
+  }
+  nav > ul > li > a::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(var(--accent), 0.1);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  nav > ul > li > a:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  nav > ul > li ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: var(--border-radius);
+    transform-origin: left top;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+    list-style: none;
+    padding: 0.5rem 0;
+    z-index: 1000;
+  }
+  nav > ul > li ul li {
+    padding: 0.5rem 1rem;
+  }
+  nav > ul > li ul li a {
+    color: var(--dark);
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  nav > ul > li ul li a:nth-child(1) {
+    transition-delay: 0.05s;
+  }
+  nav > ul > li ul li a:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+  nav > ul > li ul li a:nth-child(3) {
+    transition-delay: 0.15s;
+  }
+  nav > ul > li ul li a:nth-child(4) {
+    transition-delay: 0.2s;
+  }
+  nav > ul > li ul li a:nth-child(5) {
+    transition-delay: 0.25s;
+  }
+  nav > ul > li ul li a:hover {
+    color: var(--primary);
+    text-shadow: 0 0 2px rgba(var(--dark), 0.1);
+  }
+  nav > ul > li:hover ul {
+    transform: scale(1);
+  }
+  
+  @media (max-width: 1200px) {
+    nav > ul {
+      gap: 1rem;
+    }
+    nav > ul > li > a {
+      font-size: 0.9rem;
+      padding: 0.5rem;
+    }
+    nav > ul .fa-home {
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+  }
+  @media (max-width: 768px) {
+    nav .hamburger {
+      display: block;
+      cursor: pointer;
+      padding: 1rem;
+    }
+    nav > ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 300px;
+    }
+    nav > ul > li {
+      padding: 0;
+    }
+    nav > ul > li > a {
+      display: block;
+      padding: 1rem;
+    }
+    nav > ul > li ul {
+      position: static;
+      transform: none;
+      box-shadow: none;
+      -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+              clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+      transition: -webkit-clip-path 0.3s ease;
+      transition: clip-path 0.3s ease;
+      transition: clip-path 0.3s ease, -webkit-clip-path 0.3s ease;
+    }
+    nav > ul > li ul.open {
+      -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+              clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    nav > ul > li ul li {
+      padding-left: 2rem;
+    }
+    nav > ul > li > a::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      background: rgba(92, 158, 177, 0.1);
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.3s ease;
+      border-radius: 4px;
+      pointer-events: none;
+  }
+  
+  nav > ul > li > a:hover::before {
+      transform: translate(-50%, -50%) scale(1);
+  }
+  
+  @media (max-width: 768px) {
+      nav > ul > li ul {
+          clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+      }
+      
+      nav > ul > li ul.open {
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      }
+  }
+  }
+
+/* Stil printare */
+@media print {
+    /* Setari generale */
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt;
+    }
+
+    /* Banner în dreapta-sus */
+    footer p:contains("Acesta este un proiect scolar!") {
+        position: absolute;
+        top: 1cm;
+        right: 1cm;
+        width: 50%;
+        border: 3px double black !important;
+        padding: 10px;
+        text-align: right;
+        background: white !important;
+        color: black !important;
+    }
+
+    /* Ascundere elemente media */
+    img, video, iframe, figure, .video-section, .link-top {
+        display: none !important;
+    }
+
+    /* Grid ca block */
+    .main-grid {
+        display: block !important;
+    }
+
+    /* Reset linkuri */
+    a {
+        color: black !important;
+        text-decoration: none !important;
+    }
+
+    /* Stilizare header */
+    h1 {
+        text-align: center !important;
+        page-break-after: avoid;
+    }
+
+    /* Meniu ca listă */
+    nav > ul {
+        display: block !important;
+        page-break-inside: avoid;
+    }
+
+    nav li {
+        display: block !important;
+        margin: 5px 0;
+    }
+
+    nav ul ul {
+        margin-left: 20px;
+    }
+
+    /* Page breaks */
+    nav {
+        page-break-after: always;
+    }
+
+    footer {
+        page-break-before: always;
+    }
+
+    /* Watermark */
+    body::after {
+        content: "Prenume\A Nume";
+        white-space: pre-wrap;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 40pt;
+        color: rgba(0, 0, 0, 0.3);
+        width: 60%;
+        height: 10%;
+        text-align: center;
+        z-index: 9999;
+        pointer-events: none;
+    }
+
+    /* Margini alternante */
+    @page :left {
+        margin-left: 2cm;
+        margin-right: 1cm;
+    }
+
+    @page :right {
+        margin-left: 1cm;
+        margin-right: 2cm;
+    }
+
+    /* Corectii generale */
+    .table-container {
+        overflow: visible !important;
+    }
+
+    .styled-table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+    }
+
+    .formula-container {
+        border: 1px solid black !important;
+        page-break-inside: avoid;
+    }
+}
+
+/* Stilizare HR cu efect de baloane */
+.styled-hr {
+    height: 40px;
+    border: none;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.styled-hr::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 70% 30%, transparent 8px, var(--accent) 8px, var(--accent) 10px, transparent 10px),
+        radial-gradient(circle at 30% 70%, transparent 4px, var(--secondary) 4px, var(--secondary) 6px, transparent 6px),
+        radial-gradient(circle at center, transparent 12px, var(--primary) 12px, var(--primary) 14px, transparent 14px);
+    background-size: 40px 42px;
+    background-repeat: repeat-x;
+    animation: moveGradient 3s linear infinite;
+    filter: drop-shadow(0 0 2px var(--primary)) 
+           drop-shadow(0 0 1px var(--accent)) 
+           drop-shadow(0 0 1px var(--secondary));
+}
+
+@keyframes moveGradient {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 0;
+    }
+}
+
+/* Efect de reflexie text */
+.reflection-text {
+    position: relative;
+    display: inline-block;
+    color: var(--primary);
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.reflection-text::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 100%;
+    top: 0;
+    padding-left: 50px;
+    transform: scaleX(-1);
+    background: linear-gradient(to right, var(--primary) 0%, transparent 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.7;
+    transition: color 0.3s ease, opacity 0.3s ease;
+    height: 100%;
+}
+.reflection-text:hover,
+.reflection-text:hover::after {
+    color: var(--accent);
+}

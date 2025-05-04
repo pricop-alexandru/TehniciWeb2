@@ -1,0 +1,161 @@
+// Gallery styles
+.galerie-statica {
+    width: 100%;
+    padding: 20px;
+    counter-reset: galerie-counter;
+
+    // Grid layout
+    display: grid;
+    gap: 20px;
+    
+    // Large screens (4x3 grid with specific empty spaces)
+    @media (min-width: 1200px) {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 300px);
+
+        // Empty spaces in the grid
+        .empty {
+            background: transparent;
+            border: none;
+            pointer-events: none;
+        }
+
+
+        // Explicit placement for items
+        .galerie-item:nth-child(1) { grid-area: 1 / 1 / 2 / 2; }
+        .galerie-item:nth-child(2) { grid-area: 1 / 2 / 2 / 3; }
+        .galerie-item:nth-child(3) { grid-area: 1 / 3 / 2 / 4; }
+        .galerie-item:nth-child(4) { grid-area: 2 / 1 / 3 / 2; }
+        .galerie-item:nth-child(5) { grid-area: 2 / 3 / 3 / 4; }
+        .galerie-item:nth-child(6) { grid-area: 3 / 1 / 4 / 2; }
+        .galerie-item:nth-child(7) { grid-area: 3 / 3 / 4 / 4; }
+        .galerie-item:nth-child(8) { grid-area: 4 / 1 / 5 / 2; }
+        .galerie-item:nth-child(9) { grid-area: 4 / 2 / 5 / 3; }
+        .galerie-item:nth-child(10) { grid-area: 4 / 3 / 5 / 4; }
+    }
+        // Ignorand faptul ca am lenevit si cat codam am scris in engleza, initial alesesem copii 5 si 8 din grid
+        // sa fie empty constant, cu comanda display: none;, si parcurgeam pana la 12.
+        // ceea ce fortase functia din galerie.ejs sa fie parcursa pana la 12 si indexul sa il scada o data la 4 si la 7 cu -1
+        // ceea ce dadea eroare daca nu puneam scaderile alea pentru ca nu mai existau indecsi, si ca sa parcurg cei 12 copii
+        // dar pentru asta exista problema ca numararea cu numere romane si imaginile se repetau prost
+        // asa ca am ales sa numar 10 copii in pozitiile cerute direct, si functia din ejs sa o fac sa numere imageIndex doar liniar
+
+    // Medium screens (2 columns)
+    @media (min-width: 768px) and (max-width: 1199px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 300px);
+        
+        .empty {
+            display: none; // Hide empty spaces on medium screens
+        }
+    }
+
+    // Small screens (1 column)
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 300px;
+        
+        .empty {
+            display: none; // Hide empty spaces on small screens
+        }
+    }
+
+    // Gallery items
+    .galerie-item {
+        position: relative;
+        margin: 0;
+        padding: 10px;
+        border: 2px solid transparent;
+        transition: all 1.2s ease; // Exact 1.2s transition as specified
+
+        // Roman numeral counter
+        &::before {
+            counter-increment: galerie-counter;
+            content: counter(galerie-counter, upper-roman); // Upper-roman seemed fun when i instantly added it
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            z-index: 1;
+        }
+
+        // Hover effects with exact specifications
+        &:hover {
+            transform: scale(1.25) rotate(-10deg); // 25% scale and 10 degrees rotation
+            border-width: 6px; // Border grows by 4px
+            border-style: solid;
+            border-color: #6EBDD3;
+            z-index: 2;
+        }
+
+        // Image container
+        picture {
+            display: block;
+            width: 100%;
+            height: 100%;
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+        }
+
+        // Caption styles
+        figcaption {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+
+            strong {
+                display: block;
+                margin-bottom: 5px;
+                font-size: 1.1em;
+            }
+
+            p {
+                margin: 5px 0;
+                font-size: 0.9em;
+            }
+
+            .licenta {
+                display: block;
+                font-size: 0.8em;
+                margin-top: 5px;
+                
+                a {
+                    color: #6EBDD3;
+                    text-decoration: none;
+                    
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        // Show caption on hover
+        &:hover figcaption {
+            transform: translateY(0);
+        }
+    }
+
+    // Message for no images
+    .no-images {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 5px;
+    }
+}
