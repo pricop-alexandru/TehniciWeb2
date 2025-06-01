@@ -4,7 +4,7 @@
         <div class="hamburger">☰</div>
         <ul>
             <li>
-                <a href="#"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="/#"><i class="fa-solid fa-house"></i> Home</a>
                 <ul>
                     <li><a href="/banner">Banner</a></li>
                     <li><a href="/deals">Deals</a></li>
@@ -13,18 +13,18 @@
                 </ul>
             </li>
             <li>
-                <a href="#">Categories</a>
+                <a href="/shop">Shop</a>
                 <ul>
-                    <li><a href="/shop">T-Shirts</a></li>
-                    <li><a href="/shop">Hoodies</a></li>
-                    <li><a href="/new">New Arrivals</a></li>
+                    <li><a href="/shop?category=TSHIRT">T-Shirts</a></li>
+                    <li><a href="/shop?category=HOODIE">Hoodies</a></li>
+                    <li><a href="/shop?is_featured=true">New Arrivals</a></li>
                 </ul>
             </li>
             <li>
                 <a href="/galerie">Gallery</a>
             </li>
             <li>
-                <a href="/about">About</a>
+                <a href="/contact">About</a>
                 <ul>
                     <li><a href="/contact">Contact</a></li>
                     <li><a href="/faq">FAQ</a></li>
@@ -33,6 +33,13 @@
         </ul>
     </nav>
     <div class="icons">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="themeToggle">
+            <label class="form-check-label" for="themeToggle">
+                <i class="fa-solid fa-sun theme-icon-light"></i>
+                <i class="fa-solid fa-moon theme-icon-dark"></i>
+            </label>
+        </div>
         <i class="fa-solid fa-circle-user"></i>
         <i class="fa-solid fa-circle-user fa-bounce"></i>
     </div>

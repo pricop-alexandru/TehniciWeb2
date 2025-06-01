@@ -1,4 +1,12 @@
-<section id="deals">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head', {title: 'Titlu'}) %>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <main>
+        <section id="deals">
     <details>
         <summary>Deal of the Day</summary>
         <p><strong>WARNING:</strong> Offer valid today only! <s>$24.99</s> <ins>$19.99</ins></p>
@@ -21,3 +29,7 @@
         <p>H = Humor Factor | L = Laughs | D = Design Quality | T = Time</p>
     </div>
 </section>
+    </main>
+    <%- include('../partials/footer') %>
+</body>
+</html>

@@ -4,6 +4,21 @@ const path = require('path');
 const sass = require('sass');
 const fs = require('fs');
 const sharp = require('sharp');
+const pool = require('./config/database');
+const Product = require('./models/product');
+
+// Database initialization
+async function initDatabase() {
+    try {
+        await pool.query('SELECT NOW()');
+        console.log('Database connected successfully');
+    } catch (err) {
+        console.error('Database connection error:', err);
+    }
+}
+
+// Initialize database connection
+initDatabase();
 
 // Define global properties for SCSS and CSS folders
 global.folderScss = path.join(__dirname, 'public/styles/sass');
@@ -141,8 +156,15 @@ function generateResizedImages(imagePath, sizes = [{name: 'medium', width: 300},
 app.get('/galerie', (req, res) => {
     const currentQuarter = getCurrentQuarter();
     const caleGalerie = galerieData.cale_galerie;
+    
     // Filter images by current quarter
     let filteredImages = galerieData.imagini.filter(img => parseInt(img.sfert_ora) === currentQuarter);
+    
+    // If no images for current quarter, show all images (fallback)
+    if (filteredImages.length === 0) {
+        filteredImages = galerieData.imagini;
+    }
+    
     // Limit to 10 images
     filteredImages = filteredImages.slice(0, 10);
 
@@ -159,8 +181,71 @@ app.get('/galerie', (req, res) => {
     });
 });
 
-// Add 'galerie' and new pages to validPages in wildcard route
-const validPages = ['index', 'home', 'despre', 'galerie', 'banner', 'deals', 'video', 'bestsellers', 'shop', 'new', 'contact', 'faq'];
+// Route for shop page with filtering
+app.get('/shop', async (req, res) => {
+    try {
+        const { category, style, minPrice, maxPrice, is_featured } = req.query;
+        
+        let products;
+        if (category || style || minPrice || maxPrice || is_featured) {
+            products = await Product.getFilteredProducts({
+                category,
+                style,
+                minPrice: minPrice ? parseFloat(minPrice) : null,
+                maxPrice: maxPrice ? parseFloat(maxPrice) : null,
+                is_featured: is_featured === 'true'
+            });
+        } else {
+            products = await Product.getAllProducts();
+        }
+
+        // Set appropriate title based on filters
+        let title = 'Shop - OnlyMerch';
+        if (is_featured === 'true') {
+            title = 'New Arrivals - OnlyMerch';
+        } else if (category === 'TSHIRT') {
+            title = 'T-Shirts - OnlyMerch';
+        } else if (category === 'HOODIE') {
+            title = 'Hoodies - OnlyMerch';
+        }
+
+        res.render('shop', {
+            title,
+            products,
+            filters: { category, style, minPrice, maxPrice, is_featured }
+        });
+    } catch (err) {
+        console.error('Error loading shop page:', err);
+        afisareEroare(res, 500, 'Server Error', 'Unable to load products');
+    }
+});
+
+// Route for individual product pages
+app.get('/shop/:id', async (req, res) => {
+    try {
+        const productId = parseInt(req.params.id);
+        if (isNaN(productId)) {
+            return afisareEroare(res, 404, 'Product Not Found', 'Invalid product ID');
+        }
+
+        const product = await Product.getProductById(productId);
+        if (!product) {
+            return afisareEroare(res, 404, 'Product Not Found', 'Product does not exist');
+        }
+
+        res.render('product', {
+            title: `${product.name} - OnlyMerch`,
+            product
+        });
+    } catch (err) {
+        console.error('Error loading product page:', err);
+        afisareEroare(res, 500, 'Server Error', 'Unable to load product');
+    }
+});
+
+
+// Add 'galerie' and new pages to validPages in wildcard route (removed 'new' since it has specific route)
+const validPages = ['index', 'home', 'despre', 'galerie', 'banner', 'deals', 'video', 'bestsellers', 'contact', 'faq'];
 
 // Cerinta 9 ruta wildcard
 app.get('/:page', (req, res) => {

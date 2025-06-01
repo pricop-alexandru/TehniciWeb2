@@ -1,4 +1,12 @@
-<div class="table-container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head', {title: 'Titlu'}) %>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <main>
+        <div class="table-container">
     <table class="styled-table">
         <caption>Our Best Sellers</caption>
         <thead>
@@ -23,3 +31,7 @@
         </tbody>
     </table>
 </div>
+    </main>
+    <%- include('../partials/footer') %>
+</body>
+</html>

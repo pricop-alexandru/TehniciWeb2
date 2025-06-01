@@ -1,32 +1,536 @@
-// Import Bootstrap and gallery styles first
-@use "galerie";
-@import "//bootstrap/scss/bootstrap";
+@use "sass:math";
 
-// Then define variables and styles
-$theme-colors: (
-  "primary": #6EBDD3,
-  "secondary": #27434B,
-  "accent": #5C9EB1,
-  "dark": #276576,
-  "light": #72C4DB
-) !default;
+// Bootstrap customization variables
+$primary: #6EBDD3;
+$secondary: #27434B;
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #343a40;
 
-$btn-primary-color: #ffffff !default;
-$btn-secondary-color: #f0f0f0 !default;
-$border-radius: 12px !default;
-$font-family-base: 'Gidole', sans-serif !default;
-$line-height-base: 1.6 !default;
+// Custom variables
+$border-radius: 12px;
+$border-radius-sm: 8px;
+$border-radius-lg: 16px;
+$btn-border-width: 2px;
 
-// Custom styles
-button {
-  cursor: pointer;
-  font-family: $font-family-base;
-  border-radius: $border-radius;
-  padding: 0.5rem 1rem;
-  background-color: var(--bs-primary);
-  color: $btn-primary-color;
-  border: none;
-  &:hover {
-    background-color: var(--bs-accent);
-  }
+// Range slider customization
+$form-range-thumb-width: 1.5rem;
+$form-range-thumb-height: 1.5rem;
+$form-range-thumb-bg: $primary;
+$form-range-track-bg: lighten($primary, 30%);
+
+// Theme variables for light/dark mode
+:root {
+    --primary: #{$primary};
+    --secondary: #{$secondary};
+    --accent: #5C9EB1;
+    --dark: #276576;
+    --light: #72C4DB;
+    --border-radius: #{$border-radius};
+    
+    // Light theme
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --border-color: #dee2e6;
+    --nav-text: #ffffff;
+    --nav-bg: linear-gradient(135deg, #{$primary}, #5C9EB1);
+}
+
+[data-bs-theme="dark"] {
+    --bg-primary: #212529;
+    --bg-secondary: #343a40;
+    --text-primary: #ffffff;
+    --text-secondary: #adb5bd;
+    --border-color: #495057;
+    --nav-text: #ffffff;
+    --nav-bg: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+}
+
+// Global theme application
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// Custom button styling
+.btn {
+    border-radius: var(--border-radius);
+    border-width: var(--bs-btn-border-width, 2px);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+}
+
+// Dark mode nav text fix
+[data-bs-theme="dark"] {
+    nav {
+        ul li a {
+            color: var(--text-primary) !important;
+            
+            &:hover {
+                color: var(--primary) !important;
+            }
+        }
+    }
+}
+
+// Link-top styling
+.link-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 70px;
+    background-color: var(--primary);
+    border-radius: 25px 25px 5px 5px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        background-color: var(--primary);
+        border-radius: 25px 25px 0 0;
+    }
+    
+    i {
+        color: white;
+        font-size: 24px;
+        position: relative;
+        z-index: 1;
+    }
+    
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+}
+
+// Price calculation popup
+.price-calculation {
+    position: fixed;
+    right: -300px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 280px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    box-shadow: -4px 0 8px rgba(0,0,0,0.1);
+    
+    &.show {
+        right: 0;
+    }
+    
+    h4 {
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+    
+    .price-value {
+        font-size: 1.5rem;
+        color: var(--primary);
+        font-weight: bold;
+    }
+}
+
+// Form controls
+.form-control, .form-select {
+    border-radius: var(--border-radius-sm, 8px);
+    border-width: 2px;
+    transition: all 0.2s ease;
+    
+    &:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.2rem rgba(110, 189, 211, 0.25);
+    }
+}
+
+// Range slider customization
+.form-range {
+    &::-webkit-slider-thumb {
+        width: $form-range-thumb-width;
+        height: $form-range-thumb-height;
+        background-color: $form-range-thumb-bg;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    &::-moz-range-thumb {
+        width: $form-range-thumb-width;
+        height: $form-range-thumb-height;
+        background-color: $form-range-thumb-bg;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    &::-webkit-slider-runnable-track {
+        background-color: $form-range-track-bg;
+    }
+    
+    &::-moz-range-track {
+        background-color: $form-range-track-bg;
+    }
+}
+
+// Theme toggle switch styling
+.form-check-input[type="checkbox"] {
+    &:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+}
+
+.theme-icon-light {
+    color: #ffc107;
+    display: inline;
+}
+
+.theme-icon-dark {
+    color: #6c757d;
+    display: none;
+}
+
+[data-bs-theme="dark"] {
+    .theme-icon-light {
+        display: none;
+    }
+    
+    .theme-icon-dark {
+        display: inline;
+        color: #ffc107;
+    }
+}
+
+// Card styling
+.card {
+    border-radius: var(--border-radius);
+    border: 2px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    transition: all 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+}
+
+// Header styling with proper dark mode support
+header {
+    background: var(--nav-bg);
+    color: var(--nav-text);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    h1 {
+        margin: 0;
+        font-size: 2rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        color: var(--nav-text);
+    }
+    
+    nav {
+        a {
+            color: var(--nav-text) !important;
+            text-decoration: none;
+            
+            &:hover {
+                color: var(--light) !important;
+            }
+        }
+        
+        ul {
+            background: var(--bg-primary);
+            
+            li a {
+                color: var(--text-primary) !important;
+                
+                &:hover {
+                    color: var(--primary) !important;
+                }
+            }
+        }
+    }
+    
+    .icons {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        font-size: 1.5rem;
+        
+        i {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            color: var(--nav-text);
+            
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+        
+        .form-check {
+            margin: 0;
+            
+            .form-check-label {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+// Moving banner (keeping original styles)
+.moving-banner {
+    position: relative;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    min-height: 200px;
+    
+    .banner-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 1rem;
+            animation: slideIn 1s ease-out;
+        }
+        
+        p {
+            font-size: 1.2em;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+    }
+}
+
+// Bubbles animation
+.bubbles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    
+    .bubble {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        animation: float 8s infinite;
+        
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) {
+                $size: math.floor(math.random() * 60) + 20px;
+                width: $size;
+                height: $size;
+                left: math.floor(math.random() * 100) * 1%;
+                animation-delay: math.floor(math.random() * 8) * -1s;
+                animation-duration: (math.floor(math.random() * 6) + 6) * 1s;
+            }
+        }
+    }
+}
+
+// Reflection text effect
+.reflection-text {
+    position: relative;
+    font-size: 2.5em;
+    margin: 2rem 0;
+    text-align: center;
+    color: var(--primary);
+    animation: wave 3s ease-in-out infinite;
+    
+    &::after {
+        content: attr(data-text);
+        position: absolute;
+        left: 0;
+        bottom: -0.4em;
+        width: 100%;
+        transform: scaleY(-1);
+        background: linear-gradient(0deg, var(--primary) 0%, transparent 80%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        opacity: 0.3;
+    }
+}
+
+// Styled horizontal rule
+.styled-hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    margin: 2rem auto;
+    width: 80%;
+}
+
+// Main content styling
+main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    h1 {
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    
+    p {
+        text-align: center;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+}
+
+// Footer styling
+footer {
+    background: var(--secondary);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+// Animations
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-100px) rotate(180deg);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes wave {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .btn {
+        padding: 0.5rem;
+        
+        .d-none.d-md-inline {
+            display: none !important;
+        }
+    }
+    
+    .moving-banner {
+        padding: 1rem;
+        min-height: 150px;
+        
+        .banner-content h2 {
+            font-size: 1.8em;
+        }
+    }
+    
+    header {
+        padding: 1rem;
+        
+        h1 {
+            font-size: 1.5rem;
+        }
+    }
+}
+
+// Fix for Bootstrap overrides
+.container-fluid {
+    background-color: var(--bg-primary);
+}
+
+// Dark mode specific fixes
+[data-bs-theme="dark"] {
+    .card {
+        background-color: var(--bg-secondary);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+    }
+    
+    .form-control, .form-select {
+        background-color: var(--bg-secondary);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+        
+        &::placeholder {
+            color: var(--text-secondary);
+        }
+    }
+    
+    .btn-outline-primary {
+        color: var(--primary);
+        border-color: var(--primary);
+        
+        &:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+    }
+    
+    .btn-outline-secondary {
+        color: var(--text-secondary);
+        border-color: var(--text-secondary);
+        
+        &:hover {
+            background-color: var(--text-secondary);
+            color: var(--bg-primary);
+        }
+    }
 }

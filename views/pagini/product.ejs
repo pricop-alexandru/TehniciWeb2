@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head', {title: product.name + ' - OnlyMerch'}) %>
+    <style>
+        .product-detail {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 2rem;
+            color: #e44d26;
+            font-weight: bold;
+        }
+
+        .product-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .product-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .detail-value {
+            color: #666;
+        }
+
+        .product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .featured-badge {
+            background: #e44d26;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #e44d26;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <main>
+        <div class="product-detail">
+            <a href="/shop" class="back-link">← Back to Shop</a>
+            
+            <div>
+                <img src="<%= product.image_path %>" alt="<%= product.name %>" class="product-image">
+            </div>
+
+            <div class="product-info">
+                <h1 class="product-title"><%= product.name %></h1>
+                <p class="product-price">$<%= Number(product.price).toFixed(2) %></p>
+                
+                <% if (product.is_featured) { %>
+                    <span class="featured-badge">Featured Product</span>
+                <% } %>
+
+                <p class="product-description"><%= product.description %></p>
+
+                <div class="product-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Category:</span>
+                        <span class="detail-value"><%= product.category %></span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Style:</span>
+                        <span class="detail-value"><%= product.style %></span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Color:</span>
+                        <span class="detail-value"><%= product.color %></span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Stock:</span>
+                        <span class="detail-value"><%= product.stock %> available</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Date Added:</span>
+                        <span class="detail-value"><%= new Date(product.date_added).toLocaleDateString() %></span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Product ID:</span>
+                        <span class="detail-value">#<%= product.id %></span>
+                    </div>
+                </div>
+
+                    <div>
+                        <span class="detail-label">Tags:</span>
+                        <div class="product-tags">
+                            <% (product.tags || '').split(',').forEach(tag => { %>
+                                <span class="tag"><%= tag.trim() %></span>
+                            <% }) %>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../partials/footer') %>
+</body>
+</html>
